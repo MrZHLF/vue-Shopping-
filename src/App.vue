@@ -7,10 +7,11 @@
 <script>
 export default {
   name: 'App',
-  mounted() {}
+  mounted () { }
 }
 </script>
 
 <style>
-@import './assets/scss/reset.scss';
+@import "./assets/scss/reset.scss";
+@import "./assets/scss/button.scss";
 </style>

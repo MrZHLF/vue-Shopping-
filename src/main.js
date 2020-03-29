@@ -3,6 +3,14 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueLazyload from 'vue-lazyload'
+
+Vue.use(VueLazyload)
+Vue.use(VueLazyload, {
+  loading: require('./../public/imgs/loading-svg/loading-bars.svg')
+})
+
+
 // const mock = false
 // if (mock) {
 //   require('./mock/api')
@@ -16,7 +24,7 @@ axios.defaults.baseURL = '/api'
 axios.defaults.timeout = 8000
 // axios.defaults.baseURL = env.baseURL
 // 接口错误拦截
-axios.interceptors.response.use(function(response) {
+axios.interceptors.response.use(function (response) {
   let res = response.data
   if (res.status == 0) {
     return res.data
