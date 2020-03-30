@@ -9,12 +9,18 @@
           <a href="javascript:;">协议规则</a>
         </div>
         <div class="topbar-user">
-          <a href="javascript:;" v-if="username">{{ username }}</a>
-          <a href="javascript:;" v-if="!username" @click="login">登录</a>
-          <a href="javascript:;" v-if="username">我的订单</a>
-          <a href="javascript:;" class="my-cart" @click="goToCart">
+          <a href="javascript:;"
+             v-if="username">{{ username }}</a>
+          <a href="javascript:;"
+             v-if="!username"
+             @click="login">登录</a>
+          <a href="javascript:;"
+             v-if="username">我的订单</a>
+          <a href="javascript:;"
+             class="my-cart"
+             @click="goToCart">
             <span class="icon-cart"></span>
-            购物车
+            购物车{{cartCount}}
           </a>
         </div>
       </div>
@@ -29,14 +35,14 @@
             <span>小米手机</span>
             <div class="children">
               <ul>
-                <li
-                  class="product"
-                  v-for="(item, index) in phoneList"
-                  :key="index"
-                >
-                  <a :href="'/#/product/' + item.categoryId" target="_blank">
+                <li class="product"
+                    v-for="(item, index) in phoneList"
+                    :key="index">
+                  <a :href="'/#/product/' + item.categoryId"
+                     target="_blank">
                     <div class="pro-img">
-                      <img :src="item.mainImage" alt="item.subtitle" />
+                      <img :src="item.mainImage"
+                           alt="item.subtitle" />
                     </div>
                     <div class="pro-name">{{ item.name }}</div>
                     <div class="pro-price">{{ item.price | currency }}</div>
@@ -53,72 +59,66 @@
             <div class="children">
               <ul>
                 <li class="product">
-                  <a href="" target="_blank">
+                  <a href=""
+                     target="_blank">
                     <div class="pro-img">
-                      <img
-                        src="./../../public/imgs/nav-img/nav-3-1.jpg"
-                        alt=""
-                      />
+                      <img src="./../../public/imgs/nav-img/nav-3-1.jpg"
+                           alt="" />
                     </div>
                     <div class="pro-name">小米壁画电视 65英寸</div>
                     <div class="pro-price">6999元</div>
                   </a>
                 </li>
                 <li class="product">
-                  <a href="" target="_blank">
+                  <a href=""
+                     target="_blank">
                     <div class="pro-img">
-                      <img
-                        src="./../../public/imgs/nav-img/nav-3-2.jpg"
-                        alt=""
-                      />
+                      <img src="./../../public/imgs/nav-img/nav-3-2.jpg"
+                           alt="" />
                     </div>
                     <div class="pro-name">小米全面屏电视E55A</div>
                     <div class="pro-price">1999元</div>
                   </a>
                 </li>
                 <li class="product">
-                  <a href="" target="_blank">
+                  <a href=""
+                     target="_blank">
                     <div class="pro-img">
-                      <img
-                        src="./../../public/imgs/nav-img/nav-3-3.png"
-                        alt=""
-                      />
+                      <img src="./../../public/imgs/nav-img/nav-3-3.png"
+                           alt="" />
                     </div>
                     <div class="pro-name">小米电视4A 32英寸</div>
                     <div class="pro-price">699元</div>
                   </a>
                 </li>
                 <li class="product">
-                  <a href="" target="_blank">
+                  <a href=""
+                     target="_blank">
                     <div class="pro-img">
-                      <img
-                        src="./../../public/imgs/nav-img/nav-3-4.jpg"
-                        alt=""
-                      />
+                      <img src="./../../public/imgs/nav-img/nav-3-4.jpg"
+                           alt="" />
                     </div>
                     <div class="pro-name">小米电视4A 55英寸</div>
                     <div class="pro-price">1779元</div>
                   </a>
                 </li>
                 <li class="product">
-                  <a href="" target="_blank">
+                  <a href=""
+                     target="_blank">
                     <div class="pro-img">
-                      <img
-                        src="./../../public/imgs/nav-img/nav-3-5.jpg"
-                        alt=""
-                      />
+                      <img src="./../../public/imgs/nav-img/nav-3-5.jpg"
+                           alt="" />
                     </div>
                     <div class="pro-name">小米电视4A 65英寸</div>
                     <div class="pro-price">2699元</div>
                   </a>
                 </li>
                 <li class="product">
-                  <a href="" target="_blank">
+                  <a href=""
+                     target="_blank">
                     <div class="pro-img">
-                      <img
-                        src="./../../public/imgs/nav-img/nav-3-6.png"
-                        alt=""
-                      />
+                      <img src="./../../public/imgs/nav-img/nav-3-6.png"
+                           alt="" />
                     </div>
                     <div class="pro-name">查看全部</div>
                     <div class="pro-price">查看全部</div>
@@ -130,7 +130,8 @@
         </div>
         <div class="header-search">
           <div class="wrapper">
-            <input type="text" name="keyword" />
+            <input type="text"
+                   name="keyword" />
             <a href="javascript:;"></a>
           </div>
         </div>
@@ -140,25 +141,34 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: 'nav-header',
-  data() {
+  data () {
     return {
-      username: '',
       phoneList: []
     }
   },
-  mounted() {
+  computed: {
+    // username () {
+    //   return this.$store.state.username
+    // },
+    // cartCount () {
+    //   return this.$store.state.cartCount
+    // },
+    ...mapState(['username', 'cartCount'])
+  },
+  mounted () {
     this.getProductList()
   },
   filters: {
-    currency(val) {
+    currency (val) {
       if (!val) return '0.00'
       return '￥' + val.toFixed(2) + '元'
     }
   },
   methods: {
-    getProductList() {
+    getProductList () {
       this.axios
         .get('/products', {
           params: {
@@ -171,10 +181,10 @@ export default {
           }
         })
     },
-    goToCart() {
+    goToCart () {
       this.$router.push('/cart')
     },
-    login() {
+    login () {
       this.$router.push('/login')
     }
   }
@@ -182,9 +192,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import './../assets/scss/base';
-@import './../assets/scss/mixin';
-@import './../assets/scss/config';
+@import "./../assets/scss/base";
+@import "./../assets/scss/mixin";
+@import "./../assets/scss/config";
 .header {
   .nav-topbar {
     height: 39px;
@@ -207,7 +217,7 @@ export default {
           @include bgImg(
             16px,
             12px,
-            './../../public/imgs/icon-cart-checked.png'
+            "./../../public/imgs/icon-cart-checked.png"
           );
           margin-right: 4px;
         }
@@ -230,21 +240,21 @@ export default {
           height: 55px;
 
           &::before {
-            contain: '';
+            contain: "";
             @include bgImg(
               55px,
               55px,
-              './../../public/imgs/mi-logo.png',
-              '55px'
+              "./../../public/imgs/mi-logo.png",
+              "55px"
             );
           }
           &::after {
-            contain: '';
+            contain: "";
             @include bgImg(
               55px,
               55px,
-              './../../public/imgs/mi-home.png',
-              '55px'
+              "./../../public/imgs/mi-home.png",
+              "55px"
             );
           }
         }
@@ -312,7 +322,7 @@ export default {
                 color: $colorA;
               }
               &::before {
-                content: '';
+                content: "";
                 position: absolute;
                 top: 28px;
                 right: 0;
@@ -345,7 +355,7 @@ export default {
             padding-left: 14px;
           }
           a {
-            @include bgImg(18px, 18px, './../../public/imgs/icon-search.png');
+            @include bgImg(18px, 18px, "./../../public/imgs/icon-search.png");
             margin-left: 17px;
           }
         }
