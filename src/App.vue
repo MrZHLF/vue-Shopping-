@@ -13,7 +13,7 @@ export default {
   },
   methods: {
     getUser () {
-      this.axios.get('/user').then(res => {
+      this.axios.get('/user').then((res = {}) => {
         //保存到vuex
         this.$store.dispatch('saveUserName', res.username);
       })
